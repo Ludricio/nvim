@@ -1,7 +1,6 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
-
 local nmap = function(keys, func, desc)
 	vim.keymap.set("n", keys, func, { desc = desc })
 end
@@ -38,6 +37,22 @@ nmap("<C-h>", "<C-w><C-h>", "Move focus to the left window")
 nmap("<C-l>", "<C-w><C-l>", "Move focus to the right window")
 nmap("<C-j>", "<C-w><C-j>", "Move focus to the lower window")
 nmap("<C-k>", "<C-w><C-k>", "Move focus to the upper window")
+
+-- LSP
+vim.keymap.set("i", "<c-a>", vim.lsp.buf.hover)
+vim.keymap.set("n", "<c-a>", vim.lsp.buf.hover)
+vim.keymap.set("i", "<c-s>", vim.lsp.buf.signature_help)
+vim.keymap.set("n", "<c-s>", vim.lsp.buf.signature_help)
+
+-- Replace
+vim.keymap.set("n", "<leader>ra", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "[r]eplace [a]ll" })
+vim.keymap.set("n", "<leader>rl", [[:.s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "[r]eplace [l]ine" })
+vim.keymap.set(
+	"n",
+	"<leader>rc",
+	[[:.s/\<<C-r><C-w>\>/<C-r><C-w>/I<Left><Left><Left>]],
+	{ desc = "[r]eplace [c]urrent word" }
+)
 
 -- See `:help telescope.builtin`
 --Telescope keymaps
@@ -77,3 +92,32 @@ vim.keymap.set("n", "<leader>sn", function()
 end, { desc = "[s]earch [n]eovim files" })
 
 nmap("<leader>gg", "<cmd>:Git<CR>", "Show [g]it UI")
+
+local harpoon = require("harpoon")
+
+nmap("<leader>ha", function()
+	harpoon:list():add()
+end, "[a]dd to harpoon list")
+nmap("<leader>he", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end, "[e]dit harpoon list")
+
+nmap("<M-h>", function()
+	harpoon:list():select(1)
+end, "")
+nmap("<M-j>", function()
+	harpoon:list():select(2)
+end, "")
+nmap("<M-k>", function()
+	harpoon:list():select(3)
+end, "")
+nmap("<M-l>", function()
+	harpoon:list():select(4)
+end, "")
+
+nmap("<leader>hp", function()
+	harpoon:list():prev()
+end, "go to [p]revious harpoon entry")
+nmap("<leader>hn", function()
+	harpoon:list():next()
+end, "go to [n]ext harpoon entry")

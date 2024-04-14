@@ -5,6 +5,18 @@ return {
 	{ "numToStr/Comment.nvim", opts = {} },
 
 	{
+		"numToStr/Comment.nvim",
+		lazy = false,
+		config = function()
+			---@diagnostic disable-next-line: missing-fields
+			require("Comment").setup({
+				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+			})
+		end,
+	},
+	{ "JoosepAlviste/nvim-ts-context-commentstring" },
+
+	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
 			signs = {
@@ -75,4 +87,51 @@ return {
 	},
 	"tpope/vim-fugitive",
 	"tpope/vim-rhubarb",
+	{
+		"m4xshen/autoclose.nvim",
+		config = function()
+			require("autoclose").setup({
+				options = {
+					disable_when_touch = true,
+				},
+			})
+		end,
+	},
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		build = ":Copilot auth",
+		enabled = true,
+		auto_enable = true,
+		opts = {
+			enabled = true,
+			suggestion = {
+				enabled = true,
+				auto_trigger = true,
+				debounce = 75,
+				keymap = {
+					accept = "<c-x>",
+					dismiss = "<esc>",
+				},
+			},
+			panel = { enabled = false },
+			filetypes = {
+				markdown = true,
+				help = true,
+			},
+		},
+	},
+
+	{
+		"windwp/nvim-ts-autotag",
+		config = function()
+			require("nvim-ts-autotag").setup({})
+		end,
+	},
+
+	{
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
 }
