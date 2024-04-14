@@ -1,3 +1,5 @@
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 
 if not vim.loop.fs_stat(lazypath) then
@@ -15,7 +17,7 @@ require('lazy').setup({
 		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
 		icons = vim.g.have_nerd_font and {} or {
 			cmd = '⌘',
-			config = '🛠',	
+			config = '🛠',
 			event = '📅',
 			ft = '📂',
 			init = '⚙',
