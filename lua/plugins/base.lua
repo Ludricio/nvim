@@ -14,6 +14,22 @@ return {
 				topdelete = { text = "‾" },
 				changedelete = { text = "~" },
 			},
+			on_attach = function(buffnr)
+				local gs = package.loaded.gitsigns
+				local function map(mode, l, r, opts)
+					opts = opts or {}
+					opts.buffer = buffnr
+					vim.keymap.set(mode, l, r, opts)
+				end
+
+				map("n", "<leader>gb", function()
+					gs.blame_line({ full = false })
+				end, { desc = "git [b]lame line" })
+				map("n", "<leader>gd", gs.diffthis, { desc = "git [d]iff against index" })
+				map("n", "<leader>gD", function()
+					gs.diffthis("~")
+				end, { desc = "git [D]iff against last commit" })
+			end,
 		},
 	},
 	-- Highlight todo, notes, etc in comments
@@ -55,9 +71,8 @@ return {
 			statusline.section_location = function()
 				return "%2l:%-2v"
 			end
-
-			-- ... and there is more!
-			--  Check out: https://github.com/echasnovski/mini.nvim
 		end,
 	},
+	"tpope/vim-fugitive",
+	"tpope/vim-rhubarb",
 }

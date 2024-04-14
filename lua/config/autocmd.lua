@@ -40,11 +40,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- Jump to the type of the word under your cursor.
 		--  Useful when you're not sure what type a variable is and you want to see
 		--  the definition of its *type*, not where it was *defined*.
-		map("<leader>D", require("telescope.builtin").lsp_type_definitions, "type [d]efinition")
+		map("<leader>gT", require("telescope.builtin").lsp_type_definitions, "type [d]efinition")
 
 		-- Fuzzy find all the symbols in your current document.
 		--  Symbols are things like variables, functions, types, etc.
-		map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[d]ocument [s]ymbols")
+		map("<leader>ss", require("telescope.builtin").lsp_document_symbols, "[s]earch document [s]ymbols")
 
 		-- Fuzzy find all the symbols in your current workspace.
 		--  Similar to document symbols, except searches over your entire project.
