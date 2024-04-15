@@ -20,7 +20,7 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set("n", "q", "<nop>")
 vim.keymap.set("n", "Q", "<nop>")
 
-nmap("<leader>pv", "<cmd>NvimTreeOpen<CR>", "Project View")
+nmap("<leader>pv", "<cmd>NvimTreeToggle<CR>", "Project View")
 vim.keymap.set("n", "<leader><leader>", "<cmd>so<CR>", { desc = "Source file" })
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
