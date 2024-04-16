@@ -38,6 +38,7 @@ return { -- Autocompletion
 		-- See `:help cmp`
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
+
 		luasnip.config.setup({})
 		cmp.setup({
 			snippet = {
