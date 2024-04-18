@@ -55,9 +55,13 @@ return {
 				function(server_name)
 					local server = servers[server_name] or {}
 					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+					if server_name == "eslint" then
+						return
+					end
 					require("lspconfig")[server_name].setup(server)
 				end,
 			},
 		})
+		require("lspconfig").eslint.setup(require(".config.lsp.eslint"))
 	end,
 }
