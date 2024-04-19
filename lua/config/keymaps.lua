@@ -24,6 +24,7 @@ nmap("<leader>pv", "<cmd>NvimTreeToggle<CR>", "Project View")
 vim.keymap.set("n", "<leader><leader>", "<cmd>so<CR>", { desc = "Source file" })
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<leader>l", "<cmd>set relativenumber!<CR>", { silent = false })
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Go to [p]revious diagnostic message" })
