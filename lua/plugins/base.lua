@@ -28,17 +28,17 @@ return {
 			},
 			on_attach = function(buffnr)
 				local gs = package.loaded.gitsigns
-				local function map(mode, l, r, opts)
+				local function nmap(mode, l, r, opts)
 					opts = opts or {}
 					opts.buffer = buffnr
 					vim.keymap.set(mode, l, r, opts)
 				end
 
-				map("n", "<leader>gb", function()
+				nmap("n", "<leader>gb", function()
 					gs.blame_line({ full = false })
 				end, { desc = "git [b]lame line" })
-				map("n", "<leader>gd", gs.diffthis, { desc = "git [d]iff against index" })
-				map("n", "<leader>gD", function()
+				nmap("n", "<leader>gd", gs.diffthis, { desc = "git [d]iff against index" })
+				nmap("n", "<leader>gD", function()
 					gs.diffthis("~")
 				end, { desc = "git [D]iff against last commit" })
 			end,
@@ -142,5 +142,52 @@ return {
 				delay = 300,
 			})
 		end,
+	},
+
+	{
+		"stevearc/dressing.nvim",
+		opts = {},
+	},
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- add any options here
+		},
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
+		},
+		config = function()
+			require("noice").setup({
+				lsp = {
+					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+						["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+					},
+				},
+				-- you can enable a preset for easier configuration
+				presets = {
+					bottom_search = true, -- use a classic bottom cmdline for search
+					command_palette = true, -- position the cmdline and popupmenu together
+					long_message_to_split = true, -- long messages will be sent to a split
+					inc_rename = false, -- enables an input dialog for inc-rename.nvim
+					lsp_doc_border = false, -- add a border to hover docs and signature help
+				},
+			})
+		end,
+	},
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {
+			-- use_diagnostic_signs = true,
+		},
 	},
 }

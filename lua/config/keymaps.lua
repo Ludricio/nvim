@@ -30,7 +30,13 @@ vim.keymap.set("n", "<leader>l", "<cmd>set relativenumber!<CR>", { silent = fals
 vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Go to [p]revious diagnostic message" })
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Go to [n]ext diagnostic message" })
 vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show diagnostic [e]rror messages" })
-vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open diagnostic [q]uickfix list" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [e]rror messages" })
+vim.keymap.set("n", "<leader>dq", function()
+	require("trouble").toggle()
+end, { desc = "open diagnostic [q]uickfix list" })
+vim.keymap.set("n", "<leader>q", function()
+	require("trouble").toggle()
+end, { desc = "open diagnostic [q]uickfix list" })
 
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
