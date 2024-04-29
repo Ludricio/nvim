@@ -14,6 +14,9 @@ return {
 					window_picker = { enable = false },
 				},
 			},
+			diagnostics = {
+				enable = true,
+			},
 		})
 	end,
 }

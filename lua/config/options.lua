@@ -1,3 +1,5 @@
+vim.opt.termguicolors = true
+
 vim.g.have_nerd_font = true
 
 -- Line numbers
@@ -26,6 +28,10 @@ vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
 vim.opt.signcolumn = "yes"
+
+vim.opt.winbar = "%{%v:lua.require'.config.winbar'.get_location()%}"
+-- vim.opt.winbar = "%{%v:lua.require'.config.aerial'.Output_symbols_structure(nil, ' > ', true)%}"
+-- vim.opt.winbar = "%{%v:" .. winbar() .. "}"
 
 -- Decrease update time
 vim.opt.updatetime = 250

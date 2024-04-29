@@ -190,4 +190,26 @@ return {
 			-- use_diagnostic_signs = true,
 		},
 	},
+	{
+		"stevearc/aerial.nvim",
+		-- Optional dependencies
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			require("aerial").setup({
+				filter_kind = false,
+			})
+		end,
+	}, -- {
+	-- 	"SmiteshP/nvim-navic",
+	-- 	config = function()
+	-- 		require("nvim-navic").setup({
+	-- 			-- lsp = {
+	-- 			-- 	auto_attach = true,
+	-- 			-- },
+	-- 		})
+	-- 	end,
+	-- },
 }
