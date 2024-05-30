@@ -38,6 +38,9 @@ return {
 					},
 				},
 			},
+			vtsls = {
+				settings = {},
+			},
 		}
 
 		require("mason").setup()
@@ -63,5 +66,6 @@ return {
 			},
 		})
 		-- require("lspconfig").eslint.setup(require(".config.lsp.eslint"))
+		require("lspconfig.configs").vtsls = require("vtsls").lspconfig
 	end,
 }
