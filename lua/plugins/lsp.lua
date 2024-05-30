@@ -13,13 +13,6 @@ return {
 		-- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
 		-- used for completion, annotations and signatures of Neovim apis
 		{ "folke/neodev.nvim", opts = {} },
-		{
-			"pmizio/typescript-tools.nvim",
-			dependencies = {
-				"nvim-lua/plenary.nvim",
-				"neovim/nvim-lspconfig",
-			},
-		},
 	},
 	config = function()
 		-- LSP servers and clients are able to communicate to each other what features they support.
@@ -62,36 +55,13 @@ return {
 				function(server_name)
 					local server = servers[server_name] or {}
 					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-					if server_name == "eslint" then
+					if server_name == "copilot" then
 						return
 					end
 					require("lspconfig")[server_name].setup(server)
 				end,
 			},
 		})
-		require("lspconfig").eslint.setup(require(".config.lsp.eslint"))
-		require("typescript-tools").setup({
-			on_attach = function(_, buffnr)
-				local function map(mapping, cmd, desc)
-					vim.keymap.set("n", mapping, cmd, { noremap = true, silent = true, buffer = buffnr, desc = desc })
-				end
-
-				map("<leader>cr", "<cmd>TSToolsFileReferences<CR>", "File [r]eferences")
-				map("gs", "<cmd>TSToolsGoToSourceDefinition<CR>", "Go to [s]ource definition")
-				map("<leader>rf", "<cmd>TSToolsRenameFile<CR>", "[r]ename [f]ile")
-			end,
-			settings = {
-				publish_diagnostic_on = "change",
-				expose_as_code_action = "all",
-				tsserver_file_preferences = {
-					includeInlayParameterNameHints = "all",
-					includeInlayEnumMemberValueHints = true,
-					includeInlayFunctionLikeReturnTypeHints = true,
-					includeInlayFunctionParameterTypeHints = true,
-					includeInlayPropertyDeclarationTypeHints = true,
-					includeInlayVariableTypeHints = true,
-				},
-			},
-		})
+		-- require("lspconfig").eslint.setup(require(".config.lsp.eslint"))
 	end,
 }

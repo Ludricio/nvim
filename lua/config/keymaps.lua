@@ -128,3 +128,6 @@ end, "go to [p]revious harpoon entry")
 nmap("<leader>hn", function()
 	harpoon:list():next()
 end, "go to [n]ext harpoon entry")
+
+vim.keymap.set("n", "<leader>ts", "<cmd>TodoTelescope<CR>", { desc = "[t]odo [s]earch" })
+vim.keymap.set("n", "<leader>tt", "<cmd>TodoTrouble<CR>", { desc = "[t]odo [t]rouble" })

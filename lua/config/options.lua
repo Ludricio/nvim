@@ -69,4 +69,4 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.wrap = false
-vim.diagnostic.config({ update_in_insert = true })
+-- vim.diagnostic.config({ update_in_insert = true })

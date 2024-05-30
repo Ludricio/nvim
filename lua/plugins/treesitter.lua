@@ -5,7 +5,26 @@ return { -- Highlight, edit, and navigate code
 		ensure_installed = { "bash", "c", "html", "lua", "luadoc", "markdown", "vim", "vimdoc" },
 		-- Autoinstall languages that are not installed
 		auto_install = true,
-		autotag = { enable = true }, -- Automatically close and rename HTML/XML tags
+		autotag = {
+			enable = true,
+			filetypes = {
+				"html",
+				"javascript",
+				"typescript",
+				"javascriptreact",
+				"typescriptreact",
+				"svelte",
+				"vue",
+				"tsx",
+				"jsx",
+				"rescript",
+				"css",
+				"lua",
+				"xml",
+				"php",
+				"markdown",
+			},
+		}, -- Automatically close and rename HTML/XML tags
 		highlight = {
 			enable = true,
 		},

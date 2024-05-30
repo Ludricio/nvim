@@ -41,6 +41,7 @@ return { -- Autocompletion
 		local luasnip = require("luasnip")
 
 		luasnip.config.setup({})
+		luasnip.filetype_extend("typescriptreact", { "html" })
 		cmp.setup({
 			snippet = {
 				expand = function(args)
@@ -123,6 +124,7 @@ return { -- Autocompletion
 				{ name = "path" },
 			},
 
+			---@diagnostic disable-next-line: missing-fields
 			formatting = {
 				format = require("lspkind").cmp_format({
 					mode = "symbol_text",
