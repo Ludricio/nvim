@@ -12,6 +12,7 @@ return {
 			-- sidebars = "transparent",
 			-- floats = "transparent",
 			-- },
+			plugins = { markdown = true },
 		},
 	},
 }

@@ -23,7 +23,6 @@ return {
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 		local servers = {
-
 			lua_ls = {
 				-- cmd = {...},
 				-- filetypes = { ...},
@@ -38,9 +37,30 @@ return {
 					},
 				},
 			},
-			vtsls = {
-				settings = {},
-			},
+			vtsls = vim.tbl_deep_extend("force", {}, require("vtsls").lspconfig, {
+				settings = {
+					vtsls = {
+						enableMoveToFileCodeAction = true,
+					},
+					typescript = {
+						updateImportsOnFileMove = { enabled = "always" },
+						suggest = {
+							completeFunctionCalls = true,
+						},
+						preferences = {
+							renameMatchingJsxTags = true,
+						},
+						inlayHints = {
+							enumMemberValues = { enabled = true },
+							functionLikeReturnTypes = { enabled = true },
+							parameterNames = { enabled = "literals" },
+							parameterTypes = { enabled = true },
+							propertyDeclarationTypes = { enabled = true },
+							variableTypes = { enabled = false },
+						},
+					},
+				},
+			}),
 		}
 
 		require("mason").setup()
@@ -58,14 +78,12 @@ return {
 				function(server_name)
 					local server = servers[server_name] or {}
 					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-					if server_name == "copilot" then
-						return
-					end
 					require("lspconfig")[server_name].setup(server)
 				end,
 			},
 		})
+
 		-- require("lspconfig").eslint.setup(require(".config.lsp.eslint"))
-		require("lspconfig.configs").vtsls = require("vtsls").lspconfig
+		-- require("lspconfig.configs").vtsls = require("vtsls").lspconfig
 	end,
 }

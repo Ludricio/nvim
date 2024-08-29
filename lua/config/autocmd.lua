@@ -73,21 +73,42 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- When you move your cursor, the highlights will be cleared (the second autocommand).
 		local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-		-- if client.name == "vtsls" then
-		-- 	local ns = vim.lsp.diagnostic.get_namespace(client.id)
-		-- 	vim.diagnostic.disable(nil, ns)
-		-- end
+		if client then
+			if client.name == "vtsls" then
+				map("gd", function()
+					require("vtsls").commands.goto_source_definition(0)
+				end, "Goto Source Definition")
+				map("gr", function()
+					require("vtsls").commands.file_references(0)
+				end, "File References")
+				map("<leader>co", function()
+					require("vtsls").commands.organize_imports(0)
+				end, "Organize Imports")
+				map("<leader>ci", function()
+					require("vtsls").commands.add_missing_imports(0)
+				end, "Add missing imports")
+				map("<leader>cu", function()
+					require("vtsls").commands.remove_unused_imports(0)
+				end, "Remove unused imports")
+			end
 
-		if client and client.server_capabilities.documentHighlightProvider then
-			vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-				buffer = event.buf,
-				callback = vim.lsp.buf.document_highlight,
-			})
+			-- if client.name == "clangd" then
+			-- 	if client.server_capabilities.signatureHelpProvider then
+			-- 		client.server_capabilities.signatureHelpProvider = false
+			-- 	end
+			-- end
 
-			vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-				buffer = event.buf,
-				callback = vim.lsp.buf.clear_references,
-			})
+			if client and client.server_capabilities.documentHighlightProvider then
+				vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+					buffer = event.buf,
+					callback = vim.lsp.buf.document_highlight,
+				})
+
+				vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+					buffer = event.buf,
+					callback = vim.lsp.buf.clear_references,
+				})
+			end
 		end
 		-- local navic = require("nvim-navic")
 		-- if client and client.server_capabilities.documentSymbolProvider then

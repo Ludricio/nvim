@@ -20,8 +20,16 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set("n", "q", "<nop>")
 vim.keymap.set("n", "Q", "<nop>")
 
+vim.keymap.set("i", "<M-.>", "->")
+vim.keymap.set("i", "<C-j>", "<C-o>j")
+vim.keymap.set("i", "<C-k>", "<C-o>k")
+vim.keymap.set("i", "<C-h>", "<C-o>h")
+vim.keymap.set("i", "<C-l>", "<C-o>l")
+vim.keymap.set("i", "<C-w>", "<C-o>w")
+vim.keymap.set("i", "<C-b>", "<C-o>b")
+
 nmap("<leader>dv", "<cmd>NvimTreeToggle<CR>", "Directory View")
-vim.keymap.set("n", "<leader><leader>", "<cmd>so<CR>", { desc = "Source file" })
+--vim.keymap.set("n", "<leader><leader>", "<cmd>so<CR>", { desc = "Source file" })
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>set relativenumber!<CR>", { silent = false })
@@ -32,10 +40,10 @@ vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Go to [n]e
 vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show diagnostic [e]rror messages" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [e]rror messages" })
 vim.keymap.set("n", "<leader>dd", function()
-	require("trouble").toggle("workspace_diagnostics")
+	require("trouble").toggle("diagnostics")
 end, { desc = "open diagnostic [q]uickfix list" })
 vim.keymap.set("n", "<leader>q", function()
-	require("trouble").toggle()
+	require("trouble").toggle("qflist")
 end, { desc = "open diagnostic [q]uickfix list" })
 
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
@@ -56,9 +64,9 @@ vim.keymap.set("n", "<leader>ra", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left>
 vim.keymap.set("n", "<leader>rl", [[:.s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "[r]eplace [l]ine" })
 vim.keymap.set(
 	"n",
-	"<leader>rc",
+	"<leader>rw",
 	[[:.s/\<<C-r><C-w>\>/<C-r><C-w>/I<Left><Left><Left>]],
-	{ desc = "[r]eplace [c]urrent word" }
+	{ desc = "[r]eplace current [w]ord" }
 )
 
 -- See `:help telescope.builtin`
@@ -130,4 +138,4 @@ nmap("<leader>hn", function()
 end, "go to [n]ext harpoon entry")
 
 vim.keymap.set("n", "<leader>ts", "<cmd>TodoTelescope<CR>", { desc = "[t]odo [s]earch" })
-vim.keymap.set("n", "<leader>tt", "<cmd>TodoTrouble<CR>", { desc = "[t]odo [t]rouble" })
+vim.keymap.set("n", "<leader>tt", "<cmd>Trouble todo toggle<CR>", { desc = "[t]odo [t]rouble" })

@@ -108,11 +108,13 @@ return {
 			enabled = true,
 			suggestion = {
 				enabled = true,
-				auto_trigger = true,
+				auto_trigger = false,
 				debounce = 75,
 				keymap = {
-					accept = "<c-x>",
+					accept = "<C-x>",
 					dismiss = "<esc>",
+					next = "<C-z>",
+					prev = "<C-S-Z>",
 				},
 			},
 			panel = { enabled = false },
@@ -126,7 +128,13 @@ return {
 	{
 		"windwp/nvim-ts-autotag",
 		config = function()
-			require("nvim-ts-autotag").setup({})
+			require("nvim-ts-autotag").setup({
+				opts = {
+					enable_close = true,
+					enable_rename = true,
+					enable_close_on_slash = true,
+				},
+			})
 		end,
 	},
 
@@ -157,10 +165,6 @@ return {
 		dependencies = {
 			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
-			"rcarriga/nvim-notify",
 		},
 		config = function()
 			require("noice").setup({
@@ -169,7 +173,7 @@ return {
 					override = {
 						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 						["vim.lsp.util.stylize_markdown"] = true,
-						["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+						["cmp.entry.get_documentation"] = false, -- requires hrsh7th/nvim-cmp
 					},
 					signature = {
 						enabled = true,
@@ -204,6 +208,9 @@ return {
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
+			focus = true,
+			open_no_results = true,
+			auto_close = true,
 			-- use_diagnostic_signs = true,
 		},
 	},
@@ -222,5 +229,12 @@ return {
 	},
 	{
 		"yioneko/nvim-vtsls",
+	},
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		opts = {},
+		-- dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you prefer nvim-web-devicons
 	},
 }
