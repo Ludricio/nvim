@@ -13,7 +13,6 @@ return {
 				number = true,
 				relativenumber = true,
 				width = {
-					-- min = "50%",
 					max = -1,
 				},
 				adaptive_size = true,
@@ -30,11 +29,6 @@ return {
 			diagnostics = {
 				enable = true,
 				show_on_dirs = true,
-			},
-			renderer = {
-				-- highlight_modified = "all",
-				-- highlight_git = "all",
-				-- highlight_diagnostics = "all",
 			},
 		})
 	end,

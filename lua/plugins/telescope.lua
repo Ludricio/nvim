@@ -25,11 +25,22 @@ return { -- Fuzzy Finder (files, lsp, etc)
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
 				},
+				["aerial"] = {
+					format_symbol = function(symbol_path, filetype)
+						if filetype == "json" or filetype == "yaml" then
+							return table.concat(symbol_path, ".")
+						else
+							return symbol_path[#symbol_path]
+						end
+					end,
+					show_columns = "both",
+				},
 			},
 		})
 
 		-- Enable Telescope extensions if they are installed
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")
+		pcall(require("telescope").load_extension, "aerial")
 	end,
 }

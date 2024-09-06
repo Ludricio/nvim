@@ -34,6 +34,9 @@ nmap("<leader>dv", "<cmd>NvimTreeToggle<CR>", "Directory View")
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>set relativenumber!<CR>", { silent = false })
 
+vim.keymap.set("n", "<leader>as", "<cmd>Telescope aerial<CR>", { desc = "Aerial search" })
+vim.keymap.set("n", "<leader>aa", "<cmd>AerialToggle left<CR>", { desc = "Aerial toggle" })
+
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Go to [p]revious diagnostic message" })
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Go to [n]ext diagnostic message" })
