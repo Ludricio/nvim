@@ -61,6 +61,15 @@ return {
 					},
 				},
 			}),
+			cssls = {
+				settings = {
+					css = {
+						lint = {
+							unknownAtRules = "ignore",
+						},
+					},
+				},
+			},
 		}
 
 		require("mason").setup()

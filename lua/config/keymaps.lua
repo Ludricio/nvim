@@ -28,7 +28,10 @@ vim.keymap.set("i", "<C-l>", "<C-o>l")
 vim.keymap.set("i", "<C-w>", "<C-o>w")
 vim.keymap.set("i", "<C-b>", "<C-o>b")
 
-nmap("<leader>dv", "<cmd>NvimTreeToggle<CR>", "Directory View")
+-- nmap("<leader>dv", "<cmd>NvimTreeToggle<CR>", "Directory View")
+nmap("<leader>dv", function()
+	require("oil").toggle_float()
+end, "Directory View")
 --vim.keymap.set("n", "<leader><leader>", "<cmd>so<CR>", { desc = "Source file" })
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")

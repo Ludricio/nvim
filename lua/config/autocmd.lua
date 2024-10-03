@@ -58,6 +58,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- or a suggestion from your LSP for this to activate.
 		map("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
 
+		map("<leader>cf", require("telescope").extensions.refactoring.refactors, "[c]ode [f]ormat")
+
 		-- Opens a popup that displays documentation about the word under your cursor
 		--  See `:help K` for why this keymap.
 		map("K", vim.lsp.buf.hover, "Hover Documentation")
