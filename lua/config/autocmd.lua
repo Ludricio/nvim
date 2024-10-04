@@ -58,6 +58,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- or a suggestion from your LSP for this to activate.
 		map("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
 
+		map("<leader>cf", require("telescope").extensions.refactoring.refactors, "[c]ode [f]ormat")
+
 		-- Opens a popup that displays documentation about the word under your cursor
 		--  See `:help K` for why this keymap.
 		map("K", vim.lsp.buf.hover, "Hover Documentation")
@@ -113,6 +115,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- local navic = require("nvim-navic")
 		-- if client and client.server_capabilities.documentSymbolProvider then
 		-- 	navic.attach(client, event.buf)
-		-- end
+		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+			border = "rounded",
+		}) -- end
+		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+			border = "rounded",
+		})
 	end,
 })

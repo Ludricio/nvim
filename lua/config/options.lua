@@ -1,6 +1,8 @@
 vim.opt.termguicolors = true
 
 vim.g.have_nerd_font = true
+vim.g["suda_smart_edit"] = true
+vim.g["suda#nopass"] = true
 
 -- Line numbers
 vim.opt.number = true
@@ -30,8 +32,6 @@ vim.opt.smartcase = true
 vim.opt.signcolumn = "yes"
 
 vim.opt.winbar = "%{%v:lua.require'.config.winbar'.get_location()%}"
--- vim.opt.winbar = "%{%v:lua.require'.config.aerial'.Output_symbols_structure(nil, ' > ', true)%}"
--- vim.opt.winbar = "%{%v:" .. winbar() .. "}"
 
 -- Decrease update time
 vim.opt.updatetime = 250

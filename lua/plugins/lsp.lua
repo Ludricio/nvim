@@ -7,12 +7,12 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		-- Useful status updates for LSP.
-		-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
 		{ "j-hui/fidget.nvim", opts = {} },
 
 		-- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
 		-- used for completion, annotations and signatures of Neovim apis
 		{ "folke/neodev.nvim", opts = {} },
+		{ "yioneko/nvim-vtsls" },
 	},
 	config = function()
 		-- LSP servers and clients are able to communicate to each other what features they support.
@@ -61,6 +61,15 @@ return {
 					},
 				},
 			}),
+			cssls = {
+				settings = {
+					css = {
+						lint = {
+							unknownAtRules = "ignore",
+						},
+					},
+				},
+			},
 		}
 
 		require("mason").setup()
@@ -70,6 +79,16 @@ return {
 		local ensure_installed = vim.tbl_keys(servers or {})
 		vim.list_extend(ensure_installed, {
 			"stylua", -- Used to format Lua code
+			"eslint",
+			"clangd",
+			"cssls",
+			"html",
+			"intelephense",
+			"jsonls",
+			"markdown-toc",
+			"markdownlint-cli2",
+			"marksman",
+			"prettierd",
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -82,8 +101,5 @@ return {
 				end,
 			},
 		})
-
-		-- require("lspconfig").eslint.setup(require(".config.lsp.eslint"))
-		-- require("lspconfig.configs").vtsls = require("vtsls").lspconfig
 	end,
 }
