@@ -19,8 +19,14 @@ return { -- Fuzzy Finder (files, lsp, etc)
 	config = function()
 		-- [[ Configure Telescope ]]
 		-- See `:help telescope` and `:help telescope.setup()`
+		---@class telescope.Config
 		require("telescope").setup({
-			-- pickers = {}
+			-- winblend = 100,
+			pickers = {
+				find_files = {
+					hidden = true,
+				},
+			},
 			extensions = {
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
@@ -35,6 +41,12 @@ return { -- Fuzzy Finder (files, lsp, etc)
 					end,
 					show_columns = "both",
 				},
+			},
+			defaults = {
+				dynamic_preview_title = true,
+				layout_strategy = "vertical",
+				layout_config = { width = 120 },
+				file_ignore_patterns = { "^.git/" },
 			},
 		})
 

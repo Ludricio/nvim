@@ -24,6 +24,13 @@ return {
 				lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
 			}
 		end,
+		formatters = {
+			prettier = {
+				cli_options = {
+					config_precedence = "prefer-file",
+				},
+			},
+		},
 		formatters_by_ft = {
 			lua = { "stylua" },
 
@@ -32,8 +39,11 @@ return {
 			--
 			-- You can use a sub-list to tell conform to run *until* a formatter
 			-- is found.
-			javascript = { { "prettierd", "prettier" } },
-			markdown = { { "prettierd", "prettier", "markdownlint-cli2", "markdown-toc" } },
+			javascript = { "prettierd", "prettier", stop_after_first = true },
+			typescript = { "prettierd", "prettier", stop_after_first = true },
+			typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+			javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+			-- markdown = { { "prettierd", "prettier" } },
 		},
 	},
 }

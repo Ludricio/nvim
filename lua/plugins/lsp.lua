@@ -7,12 +7,20 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		-- Useful status updates for LSP.
-		{ "j-hui/fidget.nvim", opts = {} },
+		{
+			"j-hui/fidget.nvim",
+			opts = {
+				notification = {
+					window = {
+						border = "rounded",
+					},
+				},
+			},
+		},
 
 		-- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
 		-- used for completion, annotations and signatures of Neovim apis
 		{ "folke/neodev.nvim", opts = {} },
-		{ "yioneko/nvim-vtsls" },
 	},
 	config = function()
 		-- LSP servers and clients are able to communicate to each other what features they support.
@@ -37,30 +45,6 @@ return {
 					},
 				},
 			},
-			vtsls = vim.tbl_deep_extend("force", {}, require("vtsls").lspconfig, {
-				settings = {
-					vtsls = {
-						enableMoveToFileCodeAction = true,
-					},
-					typescript = {
-						updateImportsOnFileMove = { enabled = "always" },
-						suggest = {
-							completeFunctionCalls = true,
-						},
-						preferences = {
-							renameMatchingJsxTags = true,
-						},
-						inlayHints = {
-							enumMemberValues = { enabled = true },
-							functionLikeReturnTypes = { enabled = true },
-							parameterNames = { enabled = "literals" },
-							parameterTypes = { enabled = true },
-							propertyDeclarationTypes = { enabled = true },
-							variableTypes = { enabled = false },
-						},
-					},
-				},
-			}),
 			cssls = {
 				settings = {
 					css = {
@@ -86,7 +70,7 @@ return {
 			"intelephense",
 			"jsonls",
 			"markdown-toc",
-			"markdownlint-cli2",
+			-- "markdownlint-cli2",
 			"marksman",
 			"prettierd",
 		})

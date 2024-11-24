@@ -46,10 +46,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		--  Symbols are things like variables, functions, types, etc.
 		map("<leader>ss", require("telescope.builtin").lsp_document_symbols, "[s]earch document [s]ymbols")
 
-		-- Fuzzy find all the symbols in your current workspace.
-		--  Similar to document symbols, except searches over your entire project.
-		map("<leader>ps", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[p]roject [s]ymbols")
-
 		-- Rename the variable under your cursor.
 		--  Most Language Servers support renaming across files, etc.
 		map("<leader>rn", vim.lsp.buf.rename, "[r]e[n]ame")
@@ -76,30 +72,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		local client = vim.lsp.get_client_by_id(event.data.client_id)
 
 		if client then
-			if client.name == "vtsls" then
-				map("gd", function()
-					require("vtsls").commands.goto_source_definition(0)
-				end, "Goto Source Definition")
-				map("gr", function()
-					require("vtsls").commands.file_references(0)
-				end, "File References")
-				map("<leader>co", function()
-					require("vtsls").commands.organize_imports(0)
-				end, "Organize Imports")
-				map("<leader>ci", function()
-					require("vtsls").commands.add_missing_imports(0)
-				end, "Add missing imports")
-				map("<leader>cu", function()
-					require("vtsls").commands.remove_unused_imports(0)
-				end, "Remove unused imports")
-			end
-
-			-- if client.name == "clangd" then
-			-- 	if client.server_capabilities.signatureHelpProvider then
-			-- 		client.server_capabilities.signatureHelpProvider = false
-			-- 	end
-			-- end
-
 			if client and client.server_capabilities.documentHighlightProvider then
 				vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 					buffer = event.buf,

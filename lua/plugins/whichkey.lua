@@ -3,7 +3,11 @@ return {
 	event = "VimEnter",
 	config = function()
 		local wk = require("which-key")
-		wk.setup()
+		wk.setup({
+			win = {
+				border = "rounded",
+			},
+		})
 		require("which-key").add({
 			{ "<leader>c", group = "[c]ode" },
 			{ "<leader>c_", hidden = true },

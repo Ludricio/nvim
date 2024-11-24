@@ -4,6 +4,8 @@ vim.g.have_nerd_font = true
 vim.g["suda_smart_edit"] = true
 vim.g["suda#nopass"] = true
 
+-- vim.opt.winblend = 50
+
 -- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -13,9 +15,6 @@ vim.opt.mouse = "a"
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
-
--- Sync clipboard between OS and Neovim.
-vim.opt.clipboard = "unnamedplus"
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -62,7 +61,7 @@ vim.opt.hlsearch = true
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "120"
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
