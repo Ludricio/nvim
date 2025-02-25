@@ -35,6 +35,9 @@ return {
 			},
 			on_highlights = function(hl, c) end,
 			-- cache = true,
+			-- on_colors = function(colors)
+			-- 	colors.green = "#EBBCBA"
+			-- end,
 		},
 	},
 }

@@ -1,6 +1,8 @@
 -- LSP Configuration & Plugins
 return {
 	"neovim/nvim-lspconfig",
+	lazy = false,
+	events = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		-- Automatically install LSPs and related tools to stdpath for Neovim
 		"williamboman/mason.nvim",
@@ -45,6 +47,29 @@ return {
 					},
 				},
 			},
+			-- vtsls = vim.tbl_deep_extend("force", {}, require("vtsls").lspconfig, {
+			-- vtsls = {
+			-- 	settings = {
+			-- 		typescript = {
+			-- 			updateImportsOnFileMove = { enabled = "always" },
+			-- 			suggest = {
+			-- 				completeFunctionCalls = true,
+			-- 			},
+			-- 			preferences = {
+			-- 				renameMatchingJsxTags = true,
+			-- 			},
+			-- 			inlayHints = {
+			-- 				enumMemberValues = { enabled = true },
+			-- 				functionLikeReturnTypes = { enabled = true },
+			-- 				parameterNames = { enabled = "literals" },
+			-- 				parameterTypes = { enabled = true },
+			-- 				propertyDeclarationTypes = { enabled = true },
+			-- 				variableTypes = { enabled = false },
+			-- 			},
+			-- 		},
+			-- 	},
+			-- },
+			-- }),
 			cssls = {
 				settings = {
 					css = {

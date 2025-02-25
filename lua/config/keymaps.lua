@@ -13,6 +13,9 @@ end
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
+vim.keymap.set("n", "x", '"_x')
+vim.keymap.set("i", "<C-H>", '<C-o>"_db<BS>')
+
 -- next greatest remap ever : asbjornHaland
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
@@ -80,11 +83,13 @@ vim.keymap.set(
 -- See `:help telescope.builtin`
 --Telescope keymaps
 local builtin = require("telescope.builtin")
+local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
 vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[s]earch [h]elp" })
 vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[s]earch [k]eymaps" })
 vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[s]earch [f]iles" })
 vim.keymap.set("n", "<leader>st", builtin.builtin, { desc = "[s]earch select [t]elescope" })
 vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[s]earch current [W]ord" })
+vim.keymap.set("v", "<leader>sw", live_grep_args_shortcuts.grep_visual_selection, { desc = "[s]earch current section" })
 vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[s]earch by [g]rep" })
 vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[s]earch [d]iagnostics" })
 vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[s]earch [r]esume" })
@@ -147,3 +152,12 @@ end, "go to [n]ext harpoon entry")
 
 vim.keymap.set("n", "<leader>ts", "<cmd>TodoTelescope<CR>", { desc = "[t]odo [s]earch" })
 vim.keymap.set("n", "<leader>tt", "<cmd>Trouble todo toggle<CR>", { desc = "[t]odo [t]rouble" })
+
+vim.keymap.set("n", "<leader>ct", function()
+	print("Copilot suggestion toggle_auto_trigger")
+	vim.cmd("Copilot suggestion toggle_auto_trigger")
+end, { desc = "[c]opilot [t]oggle" })
+vim.keymap.set("n", "<leader>cc", "<cmd>CopilotChatToggle<CR>", { desc = "[c]opilot [c]hat" })
+vim.keymap.set("n", "<leader>cs", "<cmd>CopilotChatStop<CR>", { desc = "[c]opilot [c]hat" })
+
+--

@@ -12,6 +12,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			end,
 		},
 		{ "nvim-telescope/telescope-ui-select.nvim" },
+		{ "nvim-telescope/telescope-live-grep-args.nvim" },
 
 		-- Useful for getting pretty icons, but requires a Nerd Font.
 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
@@ -28,6 +29,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 				},
 			},
 			extensions = {
+				live_grep_args = {},
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
 				},
@@ -54,5 +56,6 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")
 		pcall(require("telescope").load_extension, "aerial")
+		pcall(require("telescope").load_extension, "live_grep_args")
 	end,
 }

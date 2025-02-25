@@ -35,6 +35,10 @@ return { -- Autocompletion
 		luasnip.config.setup({})
 		luasnip.filetype_extend("typescriptreact", { "html", "typescript" })
 		cmp.setup({
+			---@diagnostic disable-next-line: missing-fields
+			performance = {
+				max_view_entries = 10,
+			},
 			snippet = {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)

@@ -30,6 +30,8 @@ return {
 			build = "npm i && npm run compile vsDebugServerBundle && mv dist out",
 		},
 	},
+	lazy = true,
+	events = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
