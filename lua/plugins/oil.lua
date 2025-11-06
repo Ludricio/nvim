@@ -18,6 +18,15 @@ return {
 				max_width = 120,
 				border = "rounded",
 			},
+			confirmation = {
+				border = "rounded",
+			},
+			progress = {
+				border = "rounded",
+			},
+			keymaps_help = {
+				border = "rounded",
+			},
 		})
 	end,
 }
