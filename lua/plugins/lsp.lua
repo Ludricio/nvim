@@ -19,7 +19,6 @@ return {
 				},
 			},
 		},
-
 		-- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
 		-- used for completion, annotations and signatures of Neovim apis
 		{ "folke/neodev.nvim", opts = {} },
@@ -47,29 +46,6 @@ return {
 					},
 				},
 			},
-			-- vtsls = vim.tbl_deep_extend("force", {}, require("vtsls").lspconfig, {
-			-- vtsls = {
-			-- 	settings = {
-			-- 		typescript = {
-			-- 			updateImportsOnFileMove = { enabled = "always" },
-			-- 			suggest = {
-			-- 				completeFunctionCalls = true,
-			-- 			},
-			-- 			preferences = {
-			-- 				renameMatchingJsxTags = true,
-			-- 			},
-			-- 			inlayHints = {
-			-- 				enumMemberValues = { enabled = true },
-			-- 				functionLikeReturnTypes = { enabled = true },
-			-- 				parameterNames = { enabled = "literals" },
-			-- 				parameterTypes = { enabled = true },
-			-- 				propertyDeclarationTypes = { enabled = true },
-			-- 				variableTypes = { enabled = false },
-			-- 			},
-			-- 		},
-			-- 	},
-			-- },
-			-- }),
 			cssls = {
 				settings = {
 					css = {
@@ -79,9 +55,28 @@ return {
 					},
 				},
 			},
+			powershell_es = {
+				settings = {
+					powershell = {
+						enableProfileLoading = false,
+						debugging = {
+							createTemporaryIntegratedConsole = true,
+						},
+					},
+					pester = {
+						codeLens = false,
+						debugOutputVerbosity = "Diagnostic",
+					},
+				},
+			},
 		}
 
-		require("mason").setup()
+		require("mason").setup({
+			registries = {
+				"github:mason-org/mason-registry",
+				"github:Crashdummyy/mason-registry",
+			},
+		})
 
 		-- You can add other tools here that you want Mason to install
 		-- for you, so that they are available from within Neovim.

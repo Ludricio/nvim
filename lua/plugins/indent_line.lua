@@ -4,18 +4,20 @@ return {
 		-- Enable `lukas-reineke/indent-blankline.nvim`
 		-- See `:help ibl`
 		main = "ibl",
-		opts = {
-			debounce = 100,
-			indent = {
-				char = "|",
-				tab_char = "|",
-			},
-			whitespace = {
-				highlight = {
-					"Whitespace",
-					"NonText",
+		config = function()
+			require("ibl").setup({
+				debounce = 100,
+				indent = {
+					char = "▏",
+					tab_char = "▏",
 				},
-			},
-		},
+				whitespace = {
+					highlight = {
+						"NonText",
+					},
+				},
+				scope = { show_end = true },
+			})
+		end,
 	},
 }

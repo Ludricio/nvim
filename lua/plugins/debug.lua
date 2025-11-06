@@ -11,60 +11,47 @@ return {
 	"mfussenegger/nvim-dap",
 	-- NOTE: And you can specify dependencies as well
 	dependencies = {
-		-- Creates a beautiful debugger UI
-		"rcarriga/nvim-dap-ui",
-
-		-- Required dependency for nvim-dap-ui
-		"nvim-neotest/nvim-nio",
-
-		-- Installs the debug adapters for you
 		"williamboman/mason.nvim",
+		"rcarriga/nvim-dap-ui",
+		"nvim-neotest/nvim-nio",
 		"jay-babu/mason-nvim-dap.nvim",
-
-		-- Add your own debuggers here
-		"leoluz/nvim-dap-go",
 		"mxsdev/nvim-dap-vscode-js",
 		{
 			"microsoft/vscode-js-debug",
-			version = "1.x",
-			build = "npm i && npm run compile vsDebugServerBundle && mv dist out",
+			build = "npm install -g gulp-cli && npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+			lazy = true,
 		},
 	},
-	lazy = true,
-	events = { "BufReadPre", "BufNewFile" },
+	-- events = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
 
 		require("mason-nvim-dap").setup({
-			-- Makes a best effort to setup the various debuggers with
-			-- reasonable debug configurations
 			automatic_installation = true,
-
-			-- You can provide additional configuration to the handlers,
-			-- see mason-nvim-dap README for more information
 			handlers = {},
-
-			-- You'll need to check that you have the required things installed
-			-- online, please don't ask me how to install them :)
 			ensure_installed = {
-				-- Update this to ensure that you have the debuggers for the langs you want
-				-- 'delve',
-				-- "js-debug-adapter",
+				"node2",
 			},
 		})
 
-		-- Basic debugging keymaps, feel free to change to your liking!
+		require("dap-vscode-js").setup({
+			debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
+			adapters = { "pwa-chrome" },
+		})
+
+		-- Basic debugging keymaps, feel free to change to your liking
 		vim.keymap.set("n", "<F5>", dap.continue, { desc = "Debug: Start/Continue" })
 		vim.keymap.set("n", "<F1>", dap.step_into, { desc = "Debug: Step Into" })
 		vim.keymap.set("n", "<F2>", dap.step_over, { desc = "Debug: Step Over" })
 		vim.keymap.set("n", "<F3>", dap.step_out, { desc = "Debug: Step Out" })
-		vim.keymap.set("n", "<F10>", dap.stop, { desc = "Debug: Stop" })
-		vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
-		vim.keymap.set("n", "<leader>B", function()
+		vim.keymap.set("n", "<C-F5>", dap.stop, { desc = "Debug: Stop" })
+		vim.keymap.set("n", "<F10>", dapui.toggle, { desc = "Debug: Toggle UI" })
+		vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
+		vim.keymap.set("n", "<leader>dB", function()
 			dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
 		end, { desc = "Debug: Set Breakpoint" })
-
+		vim.keymap.set("n", "<leader>dr", dap.repl.open, { desc = "Open REPL" })
 		-- Dap UI setup
 		-- For more information, see |:help nvim-dap-ui|
 		dapui.setup({
@@ -87,60 +74,17 @@ return {
 			},
 		})
 
-		-- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-		vim.keymap.set("n", "<F7>", dapui.toggle, { desc = "Debug: See last session result." })
-
-		dap.listeners.after.event_initialized["dapui_config"] = dapui.open
-		dap.listeners.before.event_terminated["dapui_config"] = dapui.close
-		dap.listeners.before.event_exited["dapui_config"] = dapui.close
-
-		-- Install golang specific config
-		require("dap-go").setup({
-			delve = {
-				-- On Windows delve must be run attached or it crashes.
-				-- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-				detached = vim.fn.has("win32") == 0,
-			},
-		})
-
-		require("dap-vscode-js").setup({
-			debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
-			adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
-		})
-		for _, language in ipairs({ "typescript", "javascript", "svelte", "typescriptreact", "javascriptreact" }) do
-			require("dap").configurations[language] = {
-				-- config goes here
+		for _, lang in ipairs({ "typescriptreact", "javascriptreact", "typescript", "javascript" }) do
+			dap.configurations[lang] = {
 				{
-					-- use nvim-dap-vscode-js's pwa-node debug adapter
-					type = "pwa-node",
-					-- launch a new process to attach the debugger to
-					request = "launch",
-					-- name of the debug action you have to select for this config
-					name = "Launch current file in new node process",
-					program = "${file}",
-				},
-				{
-					-- use nvim-dap-vscode-js's pwa-chrome debug adapter
 					type = "pwa-chrome",
-					request = "launch",
-					-- name of the debug action
-					name = "Launch Chrome to debug client side code",
-					-- default vite dev server url
-					url = "http://localhost:3000",
-					-- for TypeScript/Svelte
-					sourceMaps = true,
-					webRoot = "${workspaceFolder}/src",
-					protocol = "inspector",
+					request = "attach",
+					name = "Attach to Chrome",
+					address = "localhost",
 					port = 9222,
-					-- skip files from vite's hmr
-					skipFiles = { "**/node_modules/**/*", "**/@vite/*", "**/src/client/*", "**/src/*" },
-					-- runtimeArgs = {
-					-- 	"--remote-debugging-port=9222",
-					-- 	"--user-data-dir=C:\\Users\\LudvigRydahl\\AppData\\Local\\Google\\Chrome\\User Data\\Default",
-					-- },
+					webRoot = "${workspaceFolder}/src",
 				},
 			}
 		end
-		-- require(".config.debug.js-debug-adapter").setup(dap)
 	end,
 }

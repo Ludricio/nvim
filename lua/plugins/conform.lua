@@ -13,7 +13,8 @@ return {
 		},
 	},
 	opts = {
-		notify_on_error = false,
+		log_level = vim.log.levels.DEBUG,
+		notify_on_error = true,
 		format_on_save = {
 			timeout_ms = 1000,
 			lsp_fallback = true,
@@ -34,10 +35,14 @@ return {
 					config_precedence = "prefer-file",
 				},
 			},
+			csharpier = {
+				command = "csharpier",
+				args = { "format", "--write-stdout", "--no-cache", "$FILENAME" },
+			},
 		},
 		formatters_by_ft = {
 			lua = { "stylua" },
-
+			cs = { "csharpier" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--

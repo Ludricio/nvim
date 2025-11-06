@@ -3,12 +3,15 @@
 -- 	-- Ignore 'This may be converted to an async function' diagnostics.
 -- 	{ 80006 }
 -- )
-
+--
 return {
 	"pmizio/typescript-tools.nvim",
 	dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 	lazy = true,
 	event = { "BufReadPre", "BufNewFile" },
+	-- cond = function() {
+	-- 	local
+	-- }
 	config = function()
 		local api = require("typescript-tools.api")
 		require("typescript-tools").setup({
