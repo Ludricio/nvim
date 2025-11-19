@@ -75,6 +75,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- When you move your cursor, the highlights will be cleared (the second autocommand).
 		local client = vim.lsp.get_client_by_id(event.data.client_id)
 
+		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+
 		if client ~= nil then
 			if not client.is_stopped and client.server_capabilities.documentHighlightProvider then
 				vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {

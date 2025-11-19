@@ -8,6 +8,7 @@ return {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		"b0o/schemastore.nvim",
 		-- Useful status updates for LSP.
 		{
 			"j-hui/fidget.nvim",
@@ -21,7 +22,18 @@ return {
 		},
 		-- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
 		-- used for completion, annotations and signatures of Neovim apis
-		{ "folke/neodev.nvim", opts = {} },
+		-- { "folke/neodev.nvim", opts = {} },
+		{
+			"folke/lazydev.nvim",
+			ft = "lua", -- only load on lua files
+			opts = {
+				library = {
+					-- See the configuration section for more details
+					-- Load luvit types when the `vim.uv` word is found
+					{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+				},
+			},
+		},
 	},
 	config = function()
 		-- LSP servers and clients are able to communicate to each other what features they support.
@@ -31,6 +43,15 @@ return {
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
+		vim.diagnostic.config({
+			virtual_text = {
+				enable = true,
+				severity = {
+					min = vim.diagnostic.severity.HINT,
+				},
+			},
+		})
+
 		local servers = {
 			lua_ls = {
 				-- cmd = {...},
@@ -38,6 +59,9 @@ return {
 				-- capabilities = {},
 				settings = {
 					Lua = {
+						hint = {
+							enable = true,
+						},
 						completion = {
 							callSnippet = "Replace",
 						},
@@ -69,6 +93,25 @@ return {
 					},
 				},
 			},
+			jsonls = {
+				settings = {
+					json = {
+						schemas = require("schemastore").json.schemas(),
+						validate = { enable = true },
+					},
+				},
+			},
+			yamlls = {
+				settings = {
+					yaml = {
+						schemaStore = {
+							enable = true,
+							url = "",
+						},
+						schemas = require("schemastore").yaml.schemas(),
+					},
+				},
+			},
 		}
 
 		require("mason").setup({
@@ -97,13 +140,22 @@ return {
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 		require("mason-lspconfig").setup({
+			ensure_installed = { "jsonls" },
+			automatic_installation = false,
 			handlers = {
 				function(server_name)
 					local server = servers[server_name] or {}
 					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-					require("lspconfig")[server_name].setup(server)
+
+					print("Configuring LSP server: " .. server_name)
+					print(vim.inspect(server))
+					vim.lsp.config(server_name, server)
+					-- require("lspconfig")[server_name].setup(server)
 				end,
 			},
 		})
+		for name, config in pairs(servers) do
+			vim.lsp.config(name, config)
+		end
 	end,
 }

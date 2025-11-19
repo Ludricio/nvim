@@ -35,6 +35,8 @@ vim.opt.winbar = "%{%v:lua.require'.config.winbar'.get_location()%}"
 -- Decrease update time
 vim.opt.updatetime = 250
 
+vim.o.pumheight = 10
+
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
 vim.opt.timeoutlen = 300
@@ -68,4 +70,6 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.wrap = false
+
+vim.o.winborder = "rounded"
 -- vim.diagnostic.config({ update_in_insert = true })
