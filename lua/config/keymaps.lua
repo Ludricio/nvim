@@ -46,8 +46,12 @@ vim.keymap.set("n", "<leader>as", "<cmd>Telescope aerial<CR>", { desc = "Aerial 
 vim.keymap.set("n", "<leader>aa", "<cmd>AerialToggle left<CR>", { desc = "Aerial toggle" })
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Go to [p]revious diagnostic message" })
-vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Go to [n]ext diagnostic message" })
+vim.keymap.set("n", "<leader>dp", function()
+	vim.diagnostic.jump({ count = 1, float = true })
+end, { desc = "Go to [p]revious diagnostic message" })
+vim.keymap.set("n", "<leader>dn", function()
+	vim.diagnostic.jump({ count = 1, float = true })
+end, { desc = "Go to [n]ext diagnostic message" })
 vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show diagnostic [e]rror messages" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [e]rror messages" })
 vim.keymap.set("n", "<leader>dd", function()
@@ -79,6 +83,11 @@ vim.keymap.set(
 	[[:.s/\<<C-r><C-w>\>/<C-r><C-w>/I<Left><Left><Left>]],
 	{ desc = "[r]eplace current [w]ord" }
 )
+
+vim.keymap.set({ "n", "x" }, "<leader>cr", function()
+	-- this keymap doesn't select any textobject by default, so you may need to provide one each time you use it.
+	require("refactoring").select_refactor()
+end, { desc = "Select refactor" })
 
 -- See `:help telescope.builtin`
 --Telescope keymaps

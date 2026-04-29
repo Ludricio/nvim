@@ -35,14 +35,14 @@ return {
 					config_precedence = "prefer-file",
 				},
 			},
-			csharpier = {
-				command = "csharpier",
-				args = { "format", "--write-stdout", "--no-cache", "$FILENAME" },
-			},
+			-- csharpier = {
+			-- 	command = "csharpier",
+			-- 	args = { "format", "--write-stdout", "$FILENAME" },
+			-- },
 		},
 		formatters_by_ft = {
 			lua = { "stylua" },
-			cs = { "csharpier" },
+			-- cs = { "csharpier" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--

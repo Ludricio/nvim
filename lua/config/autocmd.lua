@@ -16,6 +16,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 	callback = function(event)
+		print("LSP attached to buffer " .. event.buf)
+
 		-- NOTE: Remember that Lua is a real programming language, and as such it is possible
 		-- to define small helper and utility functions so you don't have to repeat yourself.
 		--
@@ -58,8 +60,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		nmap("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
 		vmap("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
 
-		nmap("<leader>cr", require("telescope").extensions.refactoring.refactors, "[c]ode [f]ormat")
-
 		-- Opens a popup that displays documentation about the word under your cursor
 		--  See `:help K` for why this keymap.
 		nmap("K", vim.lsp.buf.hover, "Hover Documentation")
@@ -93,11 +93,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- local navic = require("nvim-navic")
 		-- if client and client.server_capabilities.documentSymbolProvider then
 		-- 	navic.attach(client, event.buf)
-		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-			border = "rounded",
-		}) -- end
-		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-			border = "rounded",
-		})
+
+		if client and client.server_capabilities.hoverProvider then
+			vim.lsp.handlers["textDocument/hover"] = vim.lsp.buf.hover({
+				border = "rounded",
+			}) -- end
+		end
+		if client and client.server_capabilities.signatureHelpProvider then
+			vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.buf.signature_help({
+				border = "rounded",
+			})
+		end
 	end,
 })
